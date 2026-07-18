@@ -160,24 +160,29 @@ fetch(CSV_URL).then(r=>r.text()).then(t=>{
 });
 
 function render(){
- const cari=document.getElementById("cari").value.toLowerCase();
- const merk=document.getElementById("merk").value.toLowerCase();
- let html="",ready=0,kosong=0,nilai=0,total=0;
- rows.forEach(r=>{
-   if(cari && !(r.nama.toLowerCase().includes(cari)||r.kode.toLowerCase().includes(cari))) return;
-   if(merk && r.merk!==merk) return;
-   total++;
-   if(r.sisa>0){ready++; nilai+=r.sisa*r.harga;}
-   else kosong++;
-   html+=`<tr>
-   <td>${r.kode}</td>
-   <td>${r.nama}</td>
-   <td>Rp ${r.harga.toLocaleString('id-ID')}</td>
-   <td>${r.sisa}</td>
-   <td>${r.merk}</td>
-   <td class="${r.sisa>0?'ready':'kosong'}">${r.sisa>0?'READY':'KOSONG'}</td>
-   </tr>`;
- });
+ const daftar = r.nama.split("/");
+
+const awalan = daftar[0].trim().split(" ");
+const merkHp = awalan.slice(0,2).join(" "); // contoh: LCD VIVO
+
+daftar.forEach((item,index)=>{
+
+    let nama = item.trim();
+
+    if(index>0){
+        nama = merkHp + " " + nama;
+    }
+
+    html += `
+    <tr>
+        <td>${r.kode}</td>
+        <td>${nama}</td>
+        <td>Rp ${r.harga.toLocaleString('id-ID')}</td>
+        <td>${r.sisa}</td>
+        <td>${r.merk}</td>
+        <td class="${r.sisa>0?'ready':'kosong'}">${r.sisa>0?'READY':'KOSONG'}</td>
+    </tr>`;
+});
  document.getElementById("tbody").innerHTML=html;
  document.getElementById("totalProduk").textContent=total;
  document.getElementById("ready").textContent=ready;
