@@ -160,58 +160,32 @@ fetch(CSV_URL).then(r=>r.text()).then(t=>{
 });
 
 function render(){
-
  const cari=document.getElementById("cari").value.toLowerCase();
  const merk=document.getElementById("merk").value.toLowerCase();
-
  let html="",ready=0,kosong=0,nilai=0,total=0;
-
  rows.forEach(r=>{
-
    if(cari && !(r.nama.toLowerCase().includes(cari)||r.kode.toLowerCase().includes(cari))) return;
    if(merk && r.merk!==merk) return;
-
-   const daftar=r.nama.split("/");
-
-   const awal=daftar[0].trim().split(" ");
-   const prefix=awal.slice(0,2).join(" ");
-
-   daftar.forEach((item,index)=>{
-
-      let nama=item.trim();
-
-      if(index>0){
-         nama=prefix+" "+nama;
-      }
-
-      total++;
-
-      if(r.sisa>0){
-         ready++;
-         nilai+=r.sisa*r.harga;
-      }else{
-         kosong++;
-      }
-
-      html+=`
-      <tr>
-         <td>${r.kode}</td>
-         <td>${nama}</td>
-         <td>Rp ${r.harga.toLocaleString('id-ID')}</td>
-         <td>${r.sisa}</td>
-         <td>${r.merk}</td>
-         <td class="${r.sisa>0?'ready':'kosong'}">${r.sisa>0?'READY':'KOSONG'}</td>
-      </tr>`;
-   });
-
+   total++;
+   if(r.sisa>0){ready++; nilai+=r.sisa*r.harga;}
+   else kosong++;
+   html+=`<tr>
+   <td>${r.kode}</td>
+   <td>${r.nama}</td>
+   <td>Rp ${r.harga.toLocaleString('id-ID')}</td>
+   <td>${r.sisa}</td>
+   <td>${r.merk}</td>
+   <td class="${r.sisa>0?'ready':'kosong'}">${r.sisa>0?'READY':'KOSONG'}</td>
+   </tr>`;
  });
-
  document.getElementById("tbody").innerHTML=html;
  document.getElementById("totalProduk").textContent=total;
  document.getElementById("ready").textContent=ready;
  document.getElementById("kosong").textContent=kosong;
  document.getElementById("nilai").textContent="Rp "+nilai.toLocaleString("id-ID");
 }
+document.getElementById("cari").addEventListener("input",render);
+document.getElementById("merk").addEventListener("change",render);
 </script>
 </body>
 </html>
