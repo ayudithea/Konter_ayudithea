@@ -120,81 +120,71 @@ header p{
     border:2px solid #0b6ef3;
     font-size:15px;
 }
+/* ===========================
+   DARK MODE
+=========================== */
 
-/* Dark Mode */
-
-body.dark{
+.dark{
     background:#121212;
     color:#fff;
 }
 
-body.dark .card{
+.dark header{
+    background:linear-gradient(135deg,#2a2a2a,#1f1f1f);
+}
+
+.dark .list,
+.dark .detail,
+.dark .isi{
     background:#242424;
     color:#fff;
     border:1px solid #3a3a3a;
 }
 
-
-body.dark .box{
-    background:linear-gradient(#3a3a3a,#555555);
+.dark .judul{
+    background:linear-gradient(#3a3a3a,#2b2b2b);
     color:#fff;
-    border:1px solid #666;
 }
 
-body.dark h2{
+.dark .item{
+    border-bottom:1px solid #444;
+    color:#fff;
+}
+
+.dark .item:hover{
+    background:#333;
+}
+
+.dark .tab{
+    background:linear-gradient(#3a3a3a,#2b2b2b);
+    box-shadow:0 5px 10px rgba(0,0,0,.5);
+}
+
+.dark table{
+    background:#242424;
+    color:#fff;
+}
+
+.dark th{
+    background:#3a3a3a;
+    color:#fff;
+}
+
+.dark td{
+    border:1px solid #444;
+}
+
+.dark h3{
     color:#6cb8ff;
 }
 
-body.dark table{
+.dark .back{
+    background:#3a3a3a;
     color:#fff;
 }
 
-body.dark th{
-    background:#005bea;
-}
-
-body.dark td{
-    border-color:#444;
-}
-
-body.dark input,
-body.dark select{
-    background:#2a2a2a;
-    color:#fff;
-    border:1px solid #555;
-}
-
-body.dark footer{
-    color:#bbb;
-}
- body.dark .box h3{
-    color:#e5e5e5;
-}
-
-body.dark .nilai{
-    color:#6ec1ff;
-}
- /* ===========================
-   DARK MODE BOX
-=========================== */
-
-body.dark .box{
-    background:linear-gradient(180deg,#3a3a3a,#2b2b2b) !important;
-    color:#ffffff !important;
-    border:1px solid #4b4b4b;
-    box-shadow:0 4px 10px rgba(0,0,0,.45);
-}
-
-body.dark .box h3{
-    color:#dcdcdc !important;
-}
-
-body.dark .box .nilai{
-    color:#5db7ff !important;
-}
-
-body.dark .box *{
-    color:inherit;
+.dark .table-responsive{
+    background:#242424;
 }
 </style>
 </head>
@@ -397,6 +387,15 @@ media.addEventListener("change",()=>{
     }
 
 });
+
+ 
 </script>
+ <script>
+const tema=localStorage.getItem("tema") || "light";
+
+if(tema==="dark"){
+    document.body.classList.add("dark");
+}
+ </script>
 </body>
 </html>
