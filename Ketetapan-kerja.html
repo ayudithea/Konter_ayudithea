@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ketetapan Kerja - Konter A Yudi Thea</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#eaf3ff;
+}
+
+header{
+    background:linear-gradient(135deg,#005bea,#008cff);
+    color:#fff;
+    text-align:center;
+    padding:20px;
+    box-shadow:0 6px 15px rgba(0,0,0,.3);
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:15px;
+}
+
+.card{
+    background:#fff;
+    border-radius:18px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 8px 18px rgba(0,0,0,.25);
+}
+
+h2{
+    color:#0066cc;
+    margin-bottom:20px;
+}
+
+.back{
+    display:inline-block;
+    margin-bottom:15px;
+    padding:12px 18px;
+    text-decoration:none;
+    color:#fff;
+    background:linear-gradient(#29a7ff,#0066cc);
+    border-radius:12px;
+    font-weight:bold;
+    box-shadow:0 6px 0 #003d80;
+}
+
+.back:active{
+    transform:translateY(5px);
+    box-shadow:0 1px 0 #003d80;
+}
+
+ol{
+    padding-left:22px;
+}
+
+li{
+    margin-bottom:22px;
+    line-height:1.8;
+}
+
+li b{
+    color:#005bea;
+}
+
+footer{
+    text-align:center;
+    color:#666;
+    padding:20px;
+}
+
+@media(max-width:768px){
+
+.container{
+    padding:10px;
+}
+
+.card{
+    padding:15px;
+}
+
+h2{
+    font-size:22px;
+}
+
+li{
+    font-size:15px;
+}
+
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>📋 KETETAPAN KERJA</h1>
+<p>Konter A Yudi Thea</p>
+</header>
+
+<div class="container">
+
+<a href="index.html" class="back">⬅ Kembali ke Dashboard</a>
+
+<div class="card">
+
+<h2>Peraturan dan Ketentuan Kerja</h2>
+
+<ol>
+
+<li>
+<b>Jam Operasional</b><br>
+Jam kerja dimulai pukul <b>08.00 WIB</b> dan berakhir pukul <b>16.30 WIB</b>. Karyawan wajib hadir tepat waktu dan siap bekerja sesuai jadwal.
+</li>
+
+<li>
+<b>Pelayanan Pelanggan</b><br>
+Memberikan pelayanan yang sopan, ramah, jujur, cepat, serta profesional kepada seluruh pelanggan tanpa membedakan perlakuan.
+</li>
+
+<li>
+<b>Pencatatan Transaksi</b><br>
+Seluruh transaksi penjualan, servis, pembelian, maupun pengeluaran wajib dicatat pada sistem yang telah ditentukan.
+</li>
+
+<li>
+<b>Pengelolaan Stok</b><br>
+Setiap barang masuk dan keluar wajib dicatat sehingga jumlah stok selalu sesuai dengan kondisi fisik.
+</li>
+
+<li>
+<b>Kebersihan Area Kerja</b><br>
+Menjaga kebersihan meja servis, etalase, ruang kerja, peralatan, serta lingkungan konter selama jam operasional.
+</li>
+
+<li>
+<b>Tanggung Jawab Peralatan</b><br>
+Peralatan servis wajib digunakan dengan baik. Kerusakan atau kehilangan harus segera dilaporkan kepada pemilik.
+</li>
+
+<li>
+<b>Penggunaan Kas</b><br>
+Uang kas hanya digunakan untuk kepentingan operasional yang sah dan harus dapat dipertanggungjawabkan.
+</li>
+
+<li>
+<b>Kedisiplinan</b><br>
+Tidak meninggalkan tempat kerja tanpa izin serta menyelesaikan pekerjaan yang menjadi tanggung jawab masing-masing.
+</li>
+
+<li>
+<b>Penutupan Toko</b><br>
+Sebelum pulang wajib memastikan seluruh pekerjaan selesai, meja kerja rapi, peralatan tersimpan, listrik yang tidak digunakan dimatikan, dan toko terkunci dengan aman.
+</li>
+
+<li>
+<b>Integritas</b><br>
+Menjaga kejujuran, kerahasiaan data pelanggan, nama baik Konter A Yudi Thea, serta menghindari segala bentuk penyalahgunaan wewenang.
+</li>
+
+<li>
+<b>Kerja Sama Tim</b><br>
+Seluruh karyawan wajib saling membantu, menjaga komunikasi yang baik, dan bekerja sama untuk mencapai target pelayanan terbaik.
+</li>
+
+<li>
+<b>Evaluasi Kinerja</b><br>
+Kinerja karyawan akan dievaluasi secara berkala berdasarkan kedisiplinan, tanggung jawab, kualitas pelayanan, dan hasil pekerjaan.
+</li>
+
+</ol>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 Konter A Yudi Thea
+</footer>
+
+</body>
+</html>   arr=uniq(data.map(x=>x.tanggal));
+   judul.textContent="📅 Harian";
+ }else if(mode=="bulanan"){
+   arr=uniq(data.map(x=>x.bulan)).sort((a,b)=>a-b);
+   judul.textContent="📆 Bulanan";
+ }else{
+   arr=uniq(data.map(x=>x.tahun)).sort();
+   judul.textContent="📈 Tahunan";
+ }
+ menu.innerHTML="";
+ arr.forEach(v=>{
+  const d=document.createElement("div");
+  d.className="item";
+  d.textContent=v;
+  d.onclick=()=>lihat(v);
+  menu.appendChild(d);
+ });
+}
+
+function lihat(val){
+ let rows=data.filter(x=>{
+  if(mode=="harian") return x.tanggal==val;
+  if(mode=="bulanan") return x.bulan==val;
+  return x.tahun==val;
+ });
+ let pend=0,peng=0;
+ tbody.innerHTML="";
+ rows.forEach(r=>{
+  pend+=r.total; peng+=r.peng;
+  tbody.innerHTML+=`<tr><td>${r.tanggal}</td><td>${r.karyawan}</td><td>${r.pelanggan}</td><td>${r.produk}</td><td>Rp ${r.total.toLocaleString('id-ID')}</td><td>Rp ${r.peng.toLocaleString('id-ID')}</td></tr>`;
+ });
+ judulDetail.textContent=val;
+ ringkasan.innerHTML=`<b>Pendapatan:</b> Rp ${pend.toLocaleString('id-ID')} &nbsp; | &nbsp;
+ <b>Pengeluaran:</b> Rp ${peng.toLocaleString('id-ID')} &nbsp; | &nbsp;
+ <b>Laba:</b> Rp ${(pend-peng).toLocaleString('id-ID')} &nbsp; | &nbsp;
+ <b>Transaksi:</b> ${rows.length}`;
+}
+ function renderHarian() {
+    menu.innerHTML = "";
+
+    const bulanMap = {};
+
+    data.forEach(item => {
+        const key = item.bulan + "-" + item.tahun;
+
+        if (!bulanMap[key]) {
+            bulanMap[key] = [];
+        }
+
+        bulanMap[key].push(item.tanggal);
+    });
+
+    Object.keys(bulanMap).forEach(key => {
+
+        const box = document.createElement("div");
+        box.className = "accordion";
+
+        box.innerHTML = `
+        <div class="judul" onclick="toggle('${key}')">
+            ▶ ${key}
+        </div>
+
+        <div class="isi" id="${key}" style="display:none"></div>
+        `;
+
+        menu.appendChild(box);
+
+        const isi = document.getElementById(key);
+
+        [...new Set(bulanMap[key])].forEach(tgl => {
+
+            isi.innerHTML += `
+            <div class="item" onclick="lihat('${tgl}')">
+                📅 ${tgl}
+            </div>
+            `;
+
+        });
+
+    });
+
+ }
+ function toggle(id){
+
+const x=document.getElementById(id);
+
+if(x.style.display=="none"){
+
+x.style.display="block";
+
+}else{
+
+x.style.display="none";
+
+}
+
+ }
+</script>
+</body>
+</html>
