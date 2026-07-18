@@ -99,6 +99,70 @@ li{
 }
 
 }
+    /* ===== DARK MODE LENGKAP ===== */
+
+body.dark{
+    background:#121212;
+    color:#fff;
+}
+
+body.dark .container{
+    background:transparent;
+}
+
+body.dark .card{
+    background:#242424;
+    border:1px solid #3a3a3a;
+    box-shadow:0 6px 15px rgba(0,0,0,.45);
+}
+
+body.dark .box{
+    background:#2d2d2d;
+    color:#fff;
+    border:1px solid #444;
+}
+
+body.dark .nilai{
+    color:#6cb8ff;
+}
+
+body.dark input,
+body.dark select{
+    background:#2b2b2b;
+    color:#fff;
+    border:1px solid #555;
+}
+
+body.dark table{
+    background:#242424;
+}
+
+body.dark th{
+    background:#3a3a3a;
+    color:#fff;
+}
+
+body.dark td{
+    background:#242424;
+    color:#fff;
+    border-color:#444;
+}
+
+body.dark tr:nth-child(even) td{
+    background:#2d2d2d;
+}
+
+body.dark tr:hover td{
+    background:#353535;
+}
+
+body.dark .ready{
+    color:#39d353;
+}
+
+body.dark .kosong{
+    color:#ff6b6b;
+}
 </style>
 
 </head>
@@ -106,6 +170,13 @@ li{
 <body>
 
 <header>
+    <div style="text-align:right;padding:10px 15px;">
+<select id="themeSelect" onchange="gantiTema(this.value)">
+    <option value="auto">📱 Auto</option>
+    <option value="light">☀️ Light</option>
+    <option value="dark">🌙 Dark</option>
+</select>
+    </div>
 <h1>📋 KETETAPAN KERJA</h1>
 <p>Konter A Yudi Thea</p>
 </header>
@@ -189,6 +260,36 @@ Kinerja karyawan akan dievaluasi secara berkala berdasarkan kedisiplinan, tanggu
 <footer>
 © 2026 Konter A Yudi Thea
 </footer>
+<script>
+const media = window.matchMedia("(prefers-color-scheme: dark)");
 
+function gantiTema(mode){
+
+    localStorage.setItem("tema", mode);
+
+    if(mode==="dark"){
+        document.body.classList.add("dark");
+    }else if(mode==="light"){
+        document.body.classList.remove("dark");
+    }else{
+        document.body.classList.toggle("dark", media.matches);
+    }
+
+}
+
+const tema = localStorage.getItem("tema") || "auto";
+
+document.getElementById("themeSelect").value = tema;
+
+gantiTema(tema);
+
+media.addEventListener("change", () => {
+    if(localStorage.getItem("tema")==="auto"){
+        gantiTema("auto");
+    }
+});
+</script>
+</body>
+</html>
 </body>
 </html>
