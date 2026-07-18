@@ -134,75 +134,60 @@ background:#eef6ff;
 .dark .table-responsive{
     background:#242424;
 }
- @media (max-width:768px){
+@media (max-width:768px){
 
 .container{
-    max-width:1100px;
-    padding:15px;
+    width:100%;
+    max-width:100%;
+    margin:0;
+    padding:10px;
 }
 
 header{
-    padding:18px;
-}
-
-header h1{
-    font-size:32px;
-}
-
-header p{
-    font-size:16px;
-}
-
-.tabs{
-    display:flex;
-    gap:10px;
-    flex-wrap:nowrap;
-}
-
-.tab{
-    flex:1;
-    padding:14px;
-    font-size:16px;
-}
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:12px;
-}
-
-.box{
-    padding:16px;
-}
-
-.nilai{
-    font-size:28px;
-}
-
-.list,
-.detail,
-.card{
     padding:15px;
 }
 
-table{
-    width:100%;
-    min-width:850px;
+header h1{
+    font-size:26px;
 }
 
-th,
-td{
-    white-space:nowrap;
+header p{
     font-size:14px;
-    padding:8px;
+}
+
+.tabs{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
+
+.tab{
+    width:100%;
+    padding:12px 8px;
+    font-size:14px;
+}
+
+.list,
+.detail{
+    width:100%;
+    margin:0;
+    padding:12px;
+}
+
+.accordion{
+    width:100%;
 }
 
 .table-responsive{
+    width:100%;
     overflow-x:auto;
     -webkit-overflow-scrolling:touch;
 }
 
- }
+table{
+    min-width:850px;
+}
+}
 </style>
 </head>
 <body>
