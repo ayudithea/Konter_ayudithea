@@ -20,6 +20,35 @@ th{background:#0066cc;color:#fff}
 .hidden{display:none}
 .back{display:inline-block;margin:12px 0;text-decoration:none;color:#fff;background:#0066cc;padding:10px 16px;border-radius:10px}
 h3{margin:10px 0;color:#0066cc}
+ .accordion{
+margin-bottom:12px;
+}
+
+.judul{
+background:#0b6ef3;
+color:#fff;
+padding:14px;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+box-shadow:0 5px 10px rgba(0,0,0,.3);
+}
+
+.isi{
+padding:10px 15px;
+background:#fff;
+border-radius:0 0 12px 12px;
+}
+
+.item{
+padding:10px;
+border-bottom:1px solid #ddd;
+cursor:pointer;
+}
+
+.item:hover{
+background:#eef6ff;
+}
 </style>
 </head>
 <body>
@@ -114,6 +143,66 @@ function lihat(val){
  <b>Laba:</b> Rp ${(pend-peng).toLocaleString('id-ID')} &nbsp; | &nbsp;
  <b>Transaksi:</b> ${rows.length}`;
 }
+ function renderHarian() {
+    menu.innerHTML = "";
+
+    const bulanMap = {};
+
+    data.forEach(item => {
+        const key = item.bulan + "-" + item.tahun;
+
+        if (!bulanMap[key]) {
+            bulanMap[key] = [];
+        }
+
+        bulanMap[key].push(item.tanggal);
+    });
+
+    Object.keys(bulanMap).forEach(key => {
+
+        const box = document.createElement("div");
+        box.className = "accordion";
+
+        box.innerHTML = `
+        <div class="judul" onclick="toggle('${key}')">
+            ▶ ${key}
+        </div>
+
+        <div class="isi" id="${key}" style="display:none"></div>
+        `;
+
+        menu.appendChild(box);
+
+        const isi = document.getElementById(key);
+
+        [...new Set(bulanMap[key])].forEach(tgl => {
+
+            isi.innerHTML += `
+            <div class="item" onclick="lihat('${tgl}')">
+                📅 ${tgl}
+            </div>
+            `;
+
+        });
+
+    });
+
+ }
+ function toggle(id){
+
+const x=document.getElementById(id);
+
+if(x.style.display=="none"){
+
+x.style.display="block";
+
+}else{
+
+x.style.display="none";
+
+}
+
+ }
 </script>
 </body>
 </html>
