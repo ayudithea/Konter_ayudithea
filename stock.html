@@ -20,6 +20,81 @@ th,td{padding:10px;border:1px solid #ddd;font-size:14px}
 tr:nth-child(even){background:#f7fbff}
 .ready{color:green;font-weight:bold}
 .kosong{color:red;font-weight:bold}
+ /* ===========================
+   RESPONSIVE
+=========================== */
+
+.container{
+    width:100%;
+    max-width:1200px;
+    margin:auto;
+    padding:15px;
+}
+
+.card{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:700px;
+    border-collapse:collapse;
+}
+
+/* Tablet */
+@media (max-width:992px){
+
+.nilai{
+    font-size:24px;
+}
+
+th,td{
+    font-size:13px;
+    padding:8px;
+}
+
+}
+
+/* HP */
+@media (max-width:768px){
+
+.container{
+    padding:10px;
+}
+
+.stats{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.box{
+    padding:12px;
+}
+
+.nilai{
+    font-size:20px;
+}
+
+input,
+select{
+    width:100%;
+    margin:5px 0;
+}
+
+.card{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+}
+
+table{
+    min-width:700px;
+}
+
+th,
+td{
+    white-space:nowrap;
+}
+
+}
 </style>
 </head>
 <body>
