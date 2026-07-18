@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Konter A Yudi Thea</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#eaf3ff}
+header{background:linear-gradient(135deg,#005bea,#008cff);color:#fff;text-align:center;
+padding:18px;box-shadow:0 6px 15px rgba(0,0,0,.35)}
+.container{max-width:1100px;margin:auto;padding:15px}
+.card{background:#fff;border-radius:18px;padding:18px;margin-bottom:18px;
+box-shadow:0 8px 18px rgba(0,0,0,.25)}
+h2{color:#0066cc;margin-bottom:15px}
+#tanggalFilter{width:100%;padding:12px;font-size:18px;border-radius:10px;
+border:2px solid #0b6ef3;margin:10px 0 20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}
+.box{background:linear-gradient(#fff,#edf5ff);border-radius:15px;padding:18px;
+text-align:center;box-shadow:0 6px 12px rgba(0,0,0,.25)}
+.box h3{font-size:18px;color:#555}
+.nilai{font-size:28px;color:#0066cc;font-weight:bold;margin-top:10px}
+.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.menu a{text-decoration:none;color:#fff;text-align:center;padding:16px;border-radius:14px;
+background:linear-gradient(#29a7ff,#0066cc);
+box-shadow:0 7px 0 #003d80,0 12px 18px rgba(0,0,0,.35);font-weight:bold}
+.menu a:active{transform:translateY(6px);box-shadow:0 1px 0 #003d80}
+footer{text-align:center;padding:20px;color:#666}
+</style>
+</head>
+<body>
+<header>
+<h1>🏪 KONTER A YUDI THEA</h1>
+<p>Dashboard Internal Pemilik & Karyawan</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>📅 Ringkasan Keuangan</h2>
+<input type="date" id="tanggalFilter">
+
+<div class="grid">
+<div class="box"><h3>💰 Pendapatan</h3><div class="nilai" id="pendapatan">Rp0</div></div>
+<div class="box"><h3>💸 Pengeluaran</h3><div class="nilai" id="pengeluaran">Rp0</div></div>
+<div class="box"><h3>💵 Sisa Kas</h3><div class="nilai" id="sisa">Rp0</div></div>
+<div class="box"><h3>🧾 Transaksi</h3><div class="nilai" id="transaksi">0</div></div>
+<div class="box"><h3>📦 Barang Terjual</h3><div class="nilai" id="barang">0</div></div>
+</div>
+</div>
+
+<div class="card">
+<h2>📁 Menu Dashboard</h2>
+<div class="menu">
+<a href="pendapatan.html">💰 Pendapatan</a>
+<div class="menu">
+    <a href="stock.html">📦 Data Stok Barang</a>
+</div>
+<a href="#">📈 Laporan</a>
+<a href="#">👨‍🔧 SOP</a>
+<a href="#">💡 Tips</a>
+<a href="#">👥 Karyawan</a>
+<a href="#">📝 Catatan</a>
+<a href="#">☎ Kontak</a>
+</div>
+</div>
+
+</div>
+
+<footer>© 2026 Konter A Yudi Thea</footer>
+
+<script>
+const CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vTAP_R50frV13whqx54ctjplc-8xhcN53rHEVk5mkhLeZE283xWnr6TdTBFr-KFymEiaYE_NWgGthpo/pub?gid=1848020631&single=true&output=csv";
+let data=[];
+
+fetch(CSV_URL)
+.then(r=>r.text())
+.then(csv=>{
+ const rows=csv.trim().split(/\r?\n/);
+ for(let i=1;i<rows.length;i++){
+   const c=rows[i].split(",");
+   if(c.length<13) continue;
+   data.push({
+     tanggal:(c[0]||"").trim(),
+     jumlah:parseFloat((c[10]||"0").replace(/[^0-9.-]/g,""))||0,
+     total:parseFloat((c[11]||"0").replace(/[^0-9.-]/g,""))||0,
+     pengeluaran:parseFloat((c[12]||"0").replace(/[^0-9.-]/g,""))||0
+   });
+ }
+ const d=new Date();
+ document.getElementById("tanggalFilter").value=d.toISOString().slice(0,10);
+ hitung();
+});
+
+document.getElementById("tanggalFilter").addEventListener("change",hitung);
+
+function hitung(){
+ const v=document.getElementById("tanggalFilter").value;
+ if(!v) return;
+ const p=v.split("-");
+ const cari=p[2]+"/"+p[1]+"/"+p[0];
+ let pend=0,peng=0,trans=0,barang=0;
+ data.forEach(x=>{
+   if(x.tanggal===cari){
+      pend+=x.total;
+      peng+=x.pengeluaran;
+      barang+=x.jumlah;
+      trans++;
+   }
+ });
+ document.getElementById("pendapatan").textContent="Rp "+pend.toLocaleString("id-ID");
+ document.getElementById("pengeluaran").textContent="Rp "+peng.toLocaleString("id-ID");
+ document.getElementById("sisa").textContent="Rp "+(pend-peng).toLocaleString("id-ID");
+ document.getElementById("transaksi").textContent=trans;
+ document.getElementById("barang").textContent=barang;
+}
+</script>
+</body>
+</html>
