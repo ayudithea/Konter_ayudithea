@@ -49,86 +49,45 @@ cursor:pointer;
 .item:hover{
 background:#eef6ff;
 }
- /* ===========================
-   MODE HP
-=========================== */
+.table-responsive{
+    width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+}
+
+.table-responsive table{
+    min-width:850px;
+}
 @media (max-width:768px){
 
 .container{
-    padding:10px;
-}
-
-.tabs{
-    gap:6px;
-}
-
-.tab{
-    padding:12px 6px;
-    font-size:13px;
-}
-
-.back{
-    padding:8px 12px;
-    font-size:13px;
+    padding:8px;
 }
 
 .list,
 .detail{
-    padding:10px;
-    border-radius:14px;
+    width:100%;
+    overflow:hidden;
 }
 
-.judul{
-    padding:12px;
-    font-size:15px;
-}
-
-.item{
-    padding:12px;
-    font-size:14px;
-}
-
-/* Ringkasan */
-#ringkasan{
-    font-size:15px;
-    line-height:1.8;
-    margin-bottom:12px;
-}
-
-/* Tabel bisa digeser */
-.detail{
+.table-responsive{
+    width:100%;
     overflow-x:auto;
 }
 
-table{
-    min-width:700px;
-    font-size:13px;
+.table-responsive table{
+    min-width:850px;
 }
 
-th,
-td{
-    padding:8px 6px;
+th,td{
     white-space:nowrap;
+    font-size:12px;
+    padding:7px;
 }
 
-/* Kolom produk boleh turun */
 td:nth-child(4){
+    min-width:180px;
     white-space:normal;
-    min-width:160px;
-}
-
-/* Judul */
-h3{
-    font-size:22px;
-}
-
-/* Header */
-header h1{
-    font-size:28px;
-}
-
-header p{
-    font-size:14px;
 }
 
 }
@@ -152,10 +111,11 @@ header p{
 <div class="detail" style="margin-top:15px">
 <h3 id="judulDetail">Detail</h3>
 <div id="ringkasan"></div>
+<div class="table-responsive">
 <table>
-<thead><tr><th>Tanggal</th><th>Karyawan</th><th>Pelanggan</th><th>Produk</th><th>Total</th><th>Pengeluaran</th></tr></thead>
-<tbody id="tbody"></tbody>
+...
 </table>
+</div>
 </div>
 </div>
 
