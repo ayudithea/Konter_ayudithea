@@ -1,1 +1,209 @@
-<!DOCTYPE html><html><body><h1>Pendapatan V2 placeholder</h1><p>Maaf, file lengkap melebihi batas respons.</p></body></html>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pendapatan - Konter A Yudi Thea</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#eaf3ff}
+header{background:linear-gradient(135deg,#005bea,#008cff);color:#fff;text-align:center;padding:18px;box-shadow:0 6px 15px rgba(0,0,0,.35)}
+.container{max-width:1100px;margin:auto;padding:15px}
+.tabs{display:flex;gap:10px;margin-bottom:15px;flex-wrap:wrap}
+.tab{flex:1;background:linear-gradient(#29a7ff,#0066cc);color:#fff;padding:14px;border-radius:12px;text-align:center;cursor:pointer;font-weight:bold;box-shadow:0 6px 0 #003d80}
+.list,.detail{background:#fff;border-radius:16px;padding:15px;box-shadow:0 6px 15px rgba(0,0,0,.2)}
+.item{padding:12px;border-bottom:1px solid #ddd;cursor:pointer}
+.item:hover{background:#eef6ff}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{border:1px solid #ddd;padding:8px;font-size:14px}
+th{background:#0066cc;color:#fff}
+.hidden{display:none}
+.back{display:inline-block;margin:12px 0;text-decoration:none;color:#fff;background:#0066cc;padding:10px 16px;border-radius:10px}
+h3{margin:10px 0;color:#0066cc}
+ .accordion{
+margin-bottom:12px;
+}
+
+.judul{
+background:#0b6ef3;
+color:#fff;
+padding:14px;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+box-shadow:0 5px 10px rgba(0,0,0,.3);
+}
+
+.isi{
+padding:10px 15px;
+background:#fff;
+border-radius:0 0 12px 12px;
+}
+
+.item{
+padding:10px;
+border-bottom:1px solid #ddd;
+cursor:pointer;
+}
+
+.item:hover{
+background:#eef6ff;
+}
+</style>
+</head>
+<body>
+<header><h1>💰 Pendapatan</h1><p>Konter A Yudi Thea</p></header>
+<div class="container">
+<a class="back" href="index.html">⬅ Dashboard</a>
+<div class="tabs">
+<div class="tab" onclick="mode='harian';renderList()">📅 Harian</div>
+<div class="tab" onclick="mode='bulanan';renderList()">📆 Bulanan</div>
+<div class="tab" onclick="mode='tahunan';renderList()">📈 Tahunan</div>
+</div>
+
+<div class="list">
+<h3 id="judul">Daftar</h3>
+<div id="menu"></div>
+</div>
+
+<div class="detail" style="margin-top:15px">
+<h3 id="judulDetail">Detail</h3>
+<div id="ringkasan"></div>
+<table>
+<thead><tr><th>Tanggal</th><th>Karyawan</th><th>Pelanggan</th><th>Produk</th><th>Total</th><th>Pengeluaran</th></tr></thead>
+<tbody id="tbody"></tbody>
+</table>
+</div>
+</div>
+
+<script>
+const CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vTAP_R50frV13whqx54ctjplc-8xhcN53rHEVk5mkhLeZE283xWnr6TdTBFr-KFymEiaYE_NWgGthpo/pub?gid=1848020631&single=true&output=csv";
+let data=[],mode="harian";
+
+fetch(CSV_URL).then(r=>r.text()).then(t=>{
+ const rows=t.trim().split(/\r?\n/);
+ for(let i=1;i<rows.length;i++){
+   const c=rows[i].split(",");
+   if(c.length<13) continue;
+   const tgl=(c[0]||"").trim();
+   const p=tgl.split("/");
+   data.push({
+    tanggal:tgl,
+    bulan:p[1]||"",
+    tahun:p[2]||"",
+    karyawan:c[4]||"",
+    pelanggan:c[5]||"",
+    produk:c[8]||"",
+    total:Number((c[11]||"0").replace(/[^0-9.-]/g,""))||0,
+    peng:Number((c[12]||"0").replace(/[^0-9.-]/g,""))||0
+   });
+ }
+ renderList();
+});
+
+function uniq(a){return [...new Set(a)]}
+
+function renderList(){
+ let arr=[];
+ if(mode=="harian"){
+   renderHarian();
+   judul.textContent="📅 Harian";
+   return;
+ }else if(mode=="bulanan"){
+   arr=uniq(data.map(x=>x.bulan)).sort((a,b)=>a-b);
+   judul.textContent="📆 Bulanan";
+ }else{
+   arr=uniq(data.map(x=>x.tahun)).sort();
+   judul.textContent="📈 Tahunan";
+ }
+ menu.innerHTML="";
+ arr.forEach(v=>{
+  const d=document.createElement("div");
+  d.className="item";
+  d.textContent=v;
+  d.onclick=()=>lihat(v);
+  menu.appendChild(d);
+ });
+}
+
+function lihat(val){
+ let rows=data.filter(x=>{
+  if(mode=="harian") return x.tanggal==val;
+  if(mode=="bulanan") return x.bulan==val;
+  return x.tahun==val;
+ });
+ let pend=0,peng=0;
+ tbody.innerHTML="";
+ rows.forEach(r=>{
+  pend+=r.total; peng+=r.peng;
+  tbody.innerHTML+=`<tr><td>${r.tanggal}</td><td>${r.karyawan}</td><td>${r.pelanggan}</td><td>${r.produk}</td><td>Rp ${r.total.toLocaleString('id-ID')}</td><td>Rp ${r.peng.toLocaleString('id-ID')}</td></tr>`;
+ });
+ judulDetail.textContent=val;
+ ringkasan.innerHTML=`<b>Pendapatan:</b> Rp ${pend.toLocaleString('id-ID')} &nbsp; | &nbsp;
+ <b>Pengeluaran:</b> Rp ${peng.toLocaleString('id-ID')} &nbsp; | &nbsp;
+ <b>Laba:</b> Rp ${(pend-peng).toLocaleString('id-ID')} &nbsp; | &nbsp;
+ <b>Transaksi:</b> ${rows.length}`;
+}
+ function renderHarian() {
+    menu.innerHTML = "";
+
+    const bulanMap = {};
+
+    data.forEach(item => {
+        const key = item.bulan + "-" + item.tahun;
+
+        if (!bulanMap[key]) {
+            bulanMap[key] = [];
+        }
+
+        bulanMap[key].push(item.tanggal);
+    });
+
+    Object.keys(bulanMap).forEach(key => {
+
+        const box = document.createElement("div");
+        box.className = "accordion";
+
+        box.innerHTML = `
+        <div class="judul" onclick="toggle('${key}')">
+            ▶ ${key}
+        </div>
+
+        <div class="isi" id="${key}" style="display:none"></div>
+        `;
+
+        menu.appendChild(box);
+
+        const isi = document.getElementById(key);
+
+        [...new Set(bulanMap[key])].forEach(tgl => {
+
+            isi.innerHTML += `
+            <div class="item" onclick="lihat('${tgl}')">
+                📅 ${tgl}
+            </div>
+            `;
+
+        });
+
+    });
+
+ }
+ function toggle(id){
+
+const x=document.getElementById(id);
+
+if(x.style.display=="none"){
+
+x.style.display="block";
+
+}else{
+
+x.style.display="none";
+
+}
+
+ }
+</script>
+</body>
+</html>
