@@ -61,10 +61,71 @@ input,select{
 }
 
     }
+    .theme-box{
+    text-align:right;
+    margin:15px;
+}
+
+#themeSelect{
+    padding:10px 15px;
+    border-radius:10px;
+    border:2px solid #0b6ef3;
+    font-size:15px;
+}
+
+/* Dark Mode */
+
+body.dark{
+    background:#121212;
+    color:#fff;
+}
+
+body.dark .card{
+    background:#1f1f1f;
+    color:#fff;
+}
+
+body.dark header{
+    background:linear-gradient(135deg,#111,#333);
+}
+
+body.dark h2{
+    color:#6cb8ff;
+}
+
+body.dark table{
+    color:#fff;
+}
+
+body.dark th{
+    background:#005bea;
+}
+
+body.dark td{
+    border-color:#444;
+}
+
+body.dark input,
+body.dark select{
+    background:#2a2a2a;
+    color:#fff;
+    border:1px solid #555;
+}
+
+body.dark footer{
+    color:#bbb;
+}
 </style>
 </head>
 <body>
 <header>
+    <div class="theme-box">
+<select id="themeSelect" onchange="gantiTema(this.value)">
+<option value="auto">📱 Auto</option>
+<option value="light">☀️ Light</option>
+<option value="dark">🌙 Dark</option>
+</select>
+    </div>
 <h1>🏪 KONTER A YUDI THEA</h1>
 <p>Dashboard Internal Pemilik & Karyawan</p>
 </header>
@@ -160,6 +221,43 @@ function hitung(){
         x.style.display="none";
     }
     }
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+function gantiTema(mode){
+
+    localStorage.setItem("tema",mode);
+
+    if(mode==="dark"){
+        document.body.classList.add("dark");
+    }
+    else if(mode==="light"){
+        document.body.classList.remove("dark");
+    }
+    else{
+
+        if(media.matches){
+            document.body.classList.add("dark");
+        }else{
+            document.body.classList.remove("dark");
+        }
+
+    }
+
+}
+
+const simpan = localStorage.getItem("tema") || "auto";
+
+document.getElementById("themeSelect").value=simpan;
+
+gantiTema(simpan);
+
+media.addEventListener("change",()=>{
+
+    if(localStorage.getItem("tema")==="auto"){
+        gantiTema("auto");
+    }
+
+});
 </script>
 </body>
 </html>
