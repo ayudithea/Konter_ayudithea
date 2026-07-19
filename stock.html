@@ -164,7 +164,17 @@ function render(){
  const merk=document.getElementById("merk").value.toLowerCase();
  let html="",ready=0,kosong=0,nilai=0,total=0;
  rows.forEach(r=>{
-   if(cari && !(r.nama.toLowerCase().includes(cari)||r.kode.toLowerCase().includes(cari))) return;
+   const keyword = cari.trim().toLowerCase();
+
+if (
+    keyword &&
+    !(
+        (r.nama || "").toLowerCase().includes(keyword) ||
+        (r.kode || "").toLowerCase().includes(keyword)
+    )
+) {
+    return;
+}
    if(merk && r.merk!==merk) return;
    total++;
    if(r.sisa>0){ready++; nilai+=r.sisa*r.harga;}
