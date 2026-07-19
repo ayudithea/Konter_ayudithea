@@ -160,21 +160,26 @@ fetch(CSV_URL).then(r=>r.text()).then(t=>{
 });
 
 function render(){
- const cari=document.getElementById("cari").value.toLowerCase();
- const merk=document.getElementById("merk").value.toLowerCase();
- let html="",ready=0,kosong=0,nilai=0,total=0;
- rows.forEach(r=>{
-   const keyword = cari.trim().toLowerCase();
+ const cari = document.getElementById("cari").value.trim().toLowerCase();
+const merk = document.getElementById("merk").value.trim().toLowerCase();
 
-if (
-    keyword &&
-    !(
-        (r.nama || "").toLowerCase().includes(keyword) ||
-        (r.kode || "").toLowerCase().includes(keyword)
-    )
-) {
-    return;
-}
+rows.forEach(r => {
+
+    // Pencarian produk
+    if (
+        cari &&
+        !r.nama.toLowerCase().includes(cari) &&
+        !r.kode.toLowerCase().includes(cari)
+    ) return;
+
+    // Filter merk
+    if (
+        merk &&
+        r.merk.toLowerCase() !== merk
+    ) return;
+
+    // lanjut membuat tabel...
+});
    if(merk && r.merk!==merk) return;
    total++;
    if(r.sisa>0){ready++; nilai+=r.sisa*r.harga;}
