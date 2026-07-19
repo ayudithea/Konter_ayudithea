@@ -151,33 +151,20 @@ fetch(CSV_URL).then(r=>r.text()).then(t=>{
      kode:c[0]||"",
      nama:c[1]||"",
      harga:parseInt((c[3]||"0").replace(/[^0-9]/g,""),10)||0,
-     sisa:parseFloat((c[7]||"0").replace(/[^0-9.-]/g,""))||0,
-     merk:(c[8]||"").trim().toLowerCase(),
-     status:(c[9]||"").trim()
+     sisa:parseFloat((c[6]||"0").replace(/[^0-9.-]/g,""))||0,
+     merk:(c[7]||"").trim().toLowerCase(),
+     status:(c[8]||"").trim()
    });
  }
  render();
 });
 
 function render(){
- const cari = document.getElementById("cari").value.trim().toLowerCase();
-const merk = document.getElementById("merk").value.trim().toLowerCase();
-
-rows.forEach(r => {
-
-    // Pencarian produk
-    if (
-        cari &&
-        !r.nama.toLowerCase().includes(cari) &&
-        !r.kode.toLowerCase().includes(cari)
-    ) return;
-
-    // Filter merk
-    if (
-        merk &&
-        r.merk.toLowerCase() !== merk
-    ) return;
-}
+ const cari=document.getElementById("cari").value.toLowerCase();
+ const merk=document.getElementById("merk").value.toLowerCase();
+ let html="",ready=0,kosong=0,nilai=0,total=0;
+ rows.forEach(r=>{
+   if(cari && !(r.nama.toLowerCase().includes(cari)||r.kode.toLowerCase().includes(cari))) return;
    if(merk && r.merk!==merk) return;
    total++;
    if(r.sisa>0){ready++; nilai+=r.sisa*r.harga;}
