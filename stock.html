@@ -217,7 +217,8 @@ let rows=[];
 fetch(CSV_URL).then(r=>r.text()).then(t=>{
  const lines=t.trim().split(/\r?\n/);
  for(let i=1;i<lines.length;i++){
-   const c=lines[i].split(",");
+   const c = lines[i].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g)
+                 .map(v => v.replace(/^"|"$/g,""));
    if(c.length<9) continue;
    rows.push({
      kode:c[0]||"",
@@ -236,8 +237,14 @@ function render(){
  const merk=document.getElementById("merk").value.toLowerCase();
  let html="",ready=0,kosong=0,nilai=0,total=0;
  rows.forEach(r=>{
-   if(cari && !(r.nama.toLowerCase().includes(cari)||r.kode.toLowerCase().includes(cari))) return;
-   if(merk && r.merk!==merk) return;
+   if (
+    cari &&
+    !(
+        r.nama.toLowerCase().includes(cari) ||
+        r.kode.toLowerCase().includes(cari) ||
+        r.merk.toLowerCase().includes(cari)
+    )
+) return;
    total++;
    if(r.sisa>0){ready++; nilai+=r.sisa*r.harga;}
    else kosong++;
