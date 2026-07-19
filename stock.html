@@ -151,9 +151,9 @@ fetch(CSV_URL).then(r=>r.text()).then(t=>{
      kode:c[0]||"",
      nama:c[1]||"",
      harga:parseInt((c[3]||"0").replace(/[^0-9]/g,""),10)||0,
-     sisa:parseFloat((c[6]||"0").replace(/[^0-9.-]/g,""))||0,
-     merk:(c[7]||"").trim().toLowerCase(),
-     status:(c[8]||"").trim()
+     sisa:parseFloat((c[7]||"0").replace(/[^0-9.-]/g,""))||0,
+     merk:(c[8]||"").trim().toLowerCase(),
+     status:(c[9]||"").trim()
    });
  }
  render();
